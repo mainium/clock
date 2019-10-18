@@ -253,7 +253,7 @@ re-try the release:
     ...
     $ _build/prod/rel/clock/bin/clock stop
 
-not error, ant log is flush:
+not error, and log is flush:
 
     ...
     08:23:04.383 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:23:04.383374Z
@@ -266,16 +266,32 @@ not error, ant log is flush:
 double confirm the release flow:
 
 - update version in mix.exs
+- debug in iex
 - re-build by `$ MIX_ENV=prod mix distillery.release`
 - test by run `_build/prod/rel/clock/bin/clock`
 
 ...logging:
 
-    ༄  MIX_ENV=prod mix distillery.release
+
+    $ iex -S mix
+    Erlang/OTP 21 [erts-10.2] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:1] [hipe]
+
     Compiling 3 files (.ex)
     Generated clock app
+    Interactive Elixir (1.9.1) - press Ctrl+C to exit (type h() ENTER for help)
+    iex(1)>
+
+    ...
+    # ...clock_debug.log
+    ...
+    08:42:06.389 [info] Init. with 1000 ms interval ;-)
+    08:42:06.394 [info] Clock srv... [0.1.3]: 2019-10-18T00:42:06.392745Z
+    08:42:07.395 [info] Clock srv... [0.1.3]: 2019-10-18T00:42:07.395154Z
+
+    $ MIX_ENV=prod mix distillery.release
+    Generated clock app
     ==> Assembling release..
-    ==> Building release clock:0.1.2 using environment prod
+    ==> Building release clock:0.1.3 using environment prod
     ==> Including ERTS 10.2 from /Users/zoomq/.asdf/installs/erlang/21.2/erts-10.2
     ==> Packaging release..
     Release successfully built!
@@ -286,6 +302,35 @@ double confirm the release flow:
     ...
 
 look like is all right, BUT:
+
+    $ _build/prod/rel/clock/bin/clock start
+    ...
+    $ _build/prod/rel/clock/bin/clock stop
+
+not error, and log is flush:
+
+    ...
+    08:42:10.398 [info] Clock srv... [0.1.3]: 2019-10-18T00:42:10.397919Z
+    08:42:11.398 [info] Clock srv... [0.1.3]: 2019-10-18T00:42:11.398862Z
+    08:44:54.119 [info] Init. with 1000 ms interval ;-)
+    08:44:54.119 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:44:54.119757Z
+    08:44:55.120 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:44:55.120457Z
+    08:44:56.121 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:44:56.121594Z
+
+>> Hummm?
+
+but `$ _build/prod/rel/clock/bin/clock describe` report:
+
+    ==> Gathering release description..
+    clock-0.1.3
+    System Info ===========================
+    OS:     Darwin 16.7.0
+    ERTS:   10.2
+    Status: stopped
+    Release Info ==========================
+    Name:              clock_maint_@127.0.0.1
+    Version:           0.1.3
+    ...
 
 
 

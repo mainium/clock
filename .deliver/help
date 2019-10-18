@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+print_custom_commands_help() {
+  echo -e "  ${txtbld}Custom Deploy Environments:${txtrst}
+  edeliver deploy release|upgrade [to] qa|beta|staging|production
+  "
+}
+
+accepts_custom_command_argument() {
+  local _command="$1"
+  local _argument="$2"
+  case "${_command}" in
+    (deploy)
+      case "${_argument}" in
+        (qa|beta|staging|production)
+          DEPLOY_ENVIRONMENT="${_argument}"
+          return 0 ;;
+        ("") return 0 ;; # default: 'staging'
+        (*)  return 1 ;; # unknown deploy environment
+      esac ;;
+    (*) return 1 ;; # unknown custom command
+  esac
+}
