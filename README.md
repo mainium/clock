@@ -91,6 +91,98 @@ in another terminal auto check the export:
 > Clock is working
 
 ### try eDeliver
+> init.
+
+append dep in mix.exs:
+
+    defp deps do
+        [
+        {:logger_file_backend, "~> 0.0.10"},
+        {:distillery, "~> 2.0", warn_missing: false},
+        {:edeliver, ">= 1.6.0"},
+        ]
+    end
+
+install them:
+
+    $ mix do deps.clean --unlock --unused, deps.get, deps.compile
+    Resolving Hex dependencies...
+    Dependency resolution completed:
+    Unchanged:
+    logger_file_backend 0.0.11
+    New:
+    artificery 0.4.2
+    distillery 2.1.1
+    edeliver 1.7.0
+    * Getting distillery (Hex package)
+    * Getting edeliver (Hex package)
+    * Getting artificery (Hex package)
+    ==> artificery
+    Compiling 10 files (.ex)
+    Generated artificery app
+    ==> distillery
+    Compiling 33 files (.ex)
+    Generated distillery app
+    ==> edeliver
+    Compiling 32 files (.ex)
+    Generated edeliver app
+
+distillery at first:
+
+    $ mix distillery.init
+    Compiling 3 files (.ex)
+    Generated clock app
+
+    An example config file has been placed in rel/config.exs, review it,
+    make edits as needed/desired, and then run `mix distillery.release` to build the release
+
+distillery built release:
+
+    $ mix distillery.release
+    ==> Assembling release..
+    ==> Building release clock:0.1.0 using environment dev
+    ==> You have set dev_mode to true, skipping archival phase
+    Release successfully built!
+    To start the release you have built, you can use one of the following tasks:
+
+        # start a shell, like 'iex -S mix'
+        > _build/dev/rel/clock/bin/clock console
+
+        # start in the foreground, like 'mix run --no-halt'
+        > _build/dev/rel/clock/bin/clock foreground
+
+        # start in the background, must be stopped with the 'stop' command
+        > _build/dev/rel/clock/bin/clock start
+
+    If you started a release elsewhere, and wish to connect to it:
+
+        # connects a local shell to the running node
+        > _build/dev/rel/clock/bin/clock remote_console
+
+        # connects directly to the running node's console
+        > _build/dev/rel/clock/bin/clock attach
+
+    For a complete listing of commands and their use:
+
+        > _build/dev/rel/clock/bin/clock help
+
+try the release:
+
+    $ _build/dev/rel/clock/bin/clock start
+    ...
+    $ _build/dev/rel/clock/bin/clock stop
+
+not any error/export, but the `$ tail -f clock_debug.log` is echo immediately:
+
+    07:56:35.114 [info] Clock srv. ~> [0.1.0]: 2019-10-17T23:56:35.114648Z
+    07:56:36.115 [info] Clock srv. ~> [0.1.0]: 2019-10-17T23:56:36.115465Z
+    07:56:37.116 [info] Clock srv. ~> [0.1.0]: 2019-10-17T23:56:37.116398Z
+    08:22:54.373 [info] Init. with 1000 ms interval ;-)
+    08:22:54.373 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:22:54.373308Z
+    08:22:55.374 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:22:55.374295Z
+    08:22:56.375 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:22:56.375415Z
+
+
 
 
 ## questions
