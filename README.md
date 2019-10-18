@@ -332,6 +332,61 @@ but `$ _build/prod/rel/clock/bin/clock describe` report:
     Version:           0.1.3
     ...
 
+whatever try eDeliver now:
+
+- creat `.deliver/config`
+- with `~/.ssh/config` define my remote deliver env.:
+    + `BUILD_AT="/opt/tmp/beta/$APP"`
+    + `DELIVER_TO="/opt/apps/beta"`
+
+try `build release production`:
+
+    $ mix edeliver build release production -V
+
+    BUILDING RELEASE OF CLOCK APP ON BUILD HOST
+
+    -----> Authorizing hosts
+    Authorizing i3 on localhost:
+    -----> Ensuring hosts are ready to accept git pushes
+    bash is installed and the default shell
+    fatal: not in a git directory
+
+    A remote command failed on:
+
+    zoomq@i3
+
+    Output of the command is shown above and the command executed
+    on that host is printed below for debugging purposes:
+
+    FAILED with exit status 128:
+
+        current_shell="$0" || :
+        [ -z "$current_shell" ] && current_shell="$SHELL"
+        case "$current_shell" in
+        (*bash*) echo 'bash is installed and the default shell'  ;;
+        (*zsh*)  echo  'zsh is installed and the default shell'  ;;
+        (*)
+        echo
+        echo "You are using an unsupported shell: '$current_shell'"
+        echo "edeliver requires either bash or zsh to be installed"
+        echo "and the default shell for the build user 'zoomq'"
+        echo "on your build host: 'i3'."
+        exit 1
+        ;;
+        esac
+        set -e
+        if [ ! -d /opt/tmp/beta ]
+        then
+        mkdir -p /opt/tmp/beta
+        cd /opt/tmp/beta
+        git init
+        git config receive.denyCurrentBranch ignore
+        else
+        cd /opt/tmp/beta
+        git config receive.denyCurrentBranch ignore
+        fi
+
+>> whynot usage `/opt/tmp/beta/clock` ? and why `unsupported shell` ?
 
 
 ## questions
