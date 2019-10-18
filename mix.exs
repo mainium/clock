@@ -18,6 +18,8 @@ defmodule Clock.MixProject do
       mod: {Clock, []},
       applications: [
         :logger_file_backend,
+        # Add edeliver to the END of the list
+        :edeliver
       ]
     ]
   end

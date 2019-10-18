@@ -12,11 +12,11 @@ APP="clock"
 
 BUILD_HOST="i3"
 BUILD_USER="zoomq"
-BUILD_AT="/opt/tmp/beta"
+BUILD_AT="/opt/tmp/beta/$APP/"
 #RELEASE_DIR="$BUILD_AT/_build/prod/rel/$APP"
 
-#STAGING_HOSTS="i3" # staging / test hosts separated by space
-#STAGING_USER="zoomq" # local user at staging hosts
+STAGING_HOSTS="i3" # staging / test hosts separated by space
+STAGING_USER="zoomq" # local user at staging hosts
 #TEST_AT="/opt/apps/dev" # deploy directory on staging hosts. default is DELIVER_TO
 
 PRODUCTION_HOSTS="i3" # deploy / production hosts separated by space

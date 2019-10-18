@@ -386,10 +386,16 @@ try `build release production`:
         git config receive.denyCurrentBranch ignore
         fi
 
->> whynot usage `/opt/tmp/beta/clock` ? and why `unsupported shell` ?
-
+>> why not usage `/opt/tmp/beta/clock` ? and why `not in a git directory` ?
 
 ## questions
+
+- why the `$ MIX_ENV=prod mix distillery.release` not real generating new release bin?
+- why eDeliver not working same documents?
+    + whatever git repo. in github 
+    + or as video, just `git init .` for local new repo.
+    + `
+
 
 ## logging
 
