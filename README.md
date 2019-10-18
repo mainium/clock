@@ -182,6 +182,92 @@ not any error/export, but the `$ tail -f clock_debug.log` is echo immediately:
     08:22:55.374 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:22:55.374295Z
     08:22:56.375 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:22:56.375415Z
 
+> try update release by  distillery
+
+update version in mix.exs:
+
+    ...
+    version: "0.1.1",
+
+usage `$ mix distillery.release`, and re-try:
+
+    ༄  _build/dev/rel/clock/bin/clock start
+    init terminating in do_boot ({undef,[{Elixir.Distillery.Releases.Config.Provider,init,[[_]],[]},{init,eval_script,2,[]},{init,do_boot,3,[]}]})
+
+    Crash dump is being written to: erl_crash.dump...done
+    =CRASH REPORT==== 18-Oct-2019::08:26:44.167237 ===
+    
+    ...
+
+    {"init terminating in do_boot",{undef,[{'Elixir.Distillery.Releases.Config.Provider',init,[[]],[]},{init,eval_script,2,[]},{init,do_boot,3,[]}]}}
+    Unable to configure release!
+
+Hummm? than try: `$ MIX_ENV=prod mix distillery.release` :
+
+    ==> logger_file_backend
+    Compiling 1 file (.ex)
+    Generated logger_file_backend app
+    ==> artificery
+    Compiling 10 files (.ex)
+    Generated artificery app
+    ==> distillery
+    Compiling 33 files (.ex)
+    Generated distillery app
+    ==> edeliver
+    Compiling 32 files (.ex)
+    Generated edeliver app
+    ==> clock
+    Compiling 3 files (.ex)
+    Generated clock app
+    ==> Assembling release..
+    ==> Building release clock:0.1.1 using environment prod
+    ==> Including ERTS 10.2 from /Users/zoomq/.asdf/installs/erlang/21.2/erts-10.2
+    ==> Packaging release..
+    Release successfully built!
+    To start the release you have built, you can use one of the following tasks:
+
+        # start a shell, like 'iex -S mix'
+        > _build/prod/rel/clock/bin/clock console
+
+        # start in the foreground, like 'mix run --no-halt'
+        > _build/prod/rel/clock/bin/clock foreground
+
+        # start in the background, must be stopped with the 'stop' command
+        > _build/prod/rel/clock/bin/clock start
+
+    If you started a release elsewhere, and wish to connect to it:
+
+        # connects a local shell to the running node
+        > _build/prod/rel/clock/bin/clock remote_console
+
+        # connects directly to the running node's console
+        > _build/prod/rel/clock/bin/clock attach
+
+    For a complete listing of commands and their use:
+
+        > _build/prod/rel/clock/bin/clock help
+
+re-try the release:
+
+    $ _build/prod/rel/clock/bin/clock start
+    ...
+    $ _build/prod/rel/clock/bin/clock stop
+
+not error, ant log is flush:
+
+    ...
+    08:23:04.383 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:23:04.383374Z
+    08:23:05.384 [info] Clock srv. ~> [0.1.0]: 2019-10-18T00:23:05.384356Z
+    08:31:36.600 [info] Init. with 1000 ms interval ;-)
+    08:31:36.600 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:31:36.600809Z
+    08:31:37.601 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:31:37.601634Z
+    08:31:38.602 [info] Clock srv. ~> [0.1.1]: 2019-10-18T00:31:38.602405Z
+
+double confirm the release flow:
+
+- update version in mix.exs
+- re-build by `$ MIX_ENV=prod mix distillery.release`
+- test by run `_build/prod/rel/clock/bin/clock`
 
 
 
