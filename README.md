@@ -269,6 +269,24 @@ double confirm the release flow:
 - re-build by `$ MIX_ENV=prod mix distillery.release`
 - test by run `_build/prod/rel/clock/bin/clock`
 
+...logging:
+
+    ༄  MIX_ENV=prod mix distillery.release
+    Compiling 3 files (.ex)
+    Generated clock app
+    ==> Assembling release..
+    ==> Building release clock:0.1.2 using environment prod
+    ==> Including ERTS 10.2 from /Users/zoomq/.asdf/installs/erlang/21.2/erts-10.2
+    ==> Packaging release..
+    Release successfully built!
+    To start the release you have built, you can use one of the following tasks:
+
+        # start a shell, like 'iex -S mix'
+        > _build/prod/rel/clock/bin/clock console
+    ...
+
+look like is all right, BUT:
+
 
 
 ## questions

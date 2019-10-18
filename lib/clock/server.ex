@@ -5,7 +5,7 @@ defmodule Clock.Server do
   alias Logger, as: LOG
 
   #@vsn "0.1.0"
-  @vsn Mix.Project.config[:version]
+  #@vsn Mix.Project.config[:version]
   
   def start_link(_),
     do: GenServer.start_link(__MODULE__, %{})
@@ -21,7 +21,7 @@ defmodule Clock.Server do
     date = DateTime.utc_now() |> DateTime.to_iso8601()
     version = Application.spec(:clock, :vsn)
     #IO.puts("Clock Server [#{version}]: #{date}")
-    LOG.info("Clock srv. ~> [#{version}]: #{date}")
+    LOG.info("Clock srv... [#{version}]: #{date}")
     {:noreply, state, state[:interval]}
   end
 
